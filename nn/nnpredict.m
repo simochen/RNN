@@ -1,5 +1,5 @@
 function labels = nnpredict(nn, x)
-    nn = nnff(nn, x, zeros(size(x,1), nn.size(end)));
+    nn = nnff(nn, x, zeros(size(x,1), 1));
     k = size(nn.a{end},2);
     if k==1
         i = nn.a{end} > 0.5;

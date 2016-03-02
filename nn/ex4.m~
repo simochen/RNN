@@ -126,7 +126,7 @@ pause;
 
 fprintf('\nInitializing Neural Network Parameters ...\n')
 
-nn = nnsetup(architecture);
+%nn = nnsetup(architecture);
 
 %% =============== Part 7: Implement Backpropagation ===============
 %  Once your cost matches up with ours, you should proceed to implement the
@@ -152,14 +152,14 @@ fprintf('\nChecking Backpropagation (w/ Regularization) ... \n')
 
 %  Check gradients by running checkNNGradients
 lambda = 3;
-checkNNGradients(lambda);
+checkNNGrad(lambda);
 
+nn.lambda = 3;
 % Also output the costFunction debugging values
-debug_J  = nnCostFunction(nn_params, input_layer_size, ...
-                          hidden_layer_size, num_labels, X, y, lambda);
+nn = nnff(nn, X, y);
 
 fprintf(['\n\nCost at (fixed) debugging parameters (w/ lambda = 10): %f ' ...
-         '\n(this value should be about 0.576051)\n\n'], debug_J);
+         '\n(this value should be about 0.576051)\n\n'], nn.L);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
@@ -179,13 +179,10 @@ fprintf('\nTraining Neural Network... \n')
 options = optimset('MaxIter', 50);
 
 %  You should also try different values of lambda
-lambda = 1;
+nn.lambda = 1;
 
 % Create "short hand" for the cost function to be minimized
-costFunction = @(p) nnCostFunction(p, ...
-                                   input_layer_size, ...
-                                   hidden_layer_size, ...
-                                   num_labels, X, y, lambda);
+costFunction = @(p) nnff(p, X, y);
 
 % Now, costFunction is a function that takes in only one argument (the
 % neural network parameters)

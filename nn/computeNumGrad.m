@@ -12,6 +12,7 @@ function numgrad = computeNumGrad(func, nn)
 %        be the (approximately) the partial derivative of J with respect 
 %        to theta(i).)
 %       
+
 nn1 = nn;
 nn2 = nn;
 %numerical gradient

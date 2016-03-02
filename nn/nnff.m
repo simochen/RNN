@@ -37,7 +37,7 @@ function nn = nnff(nn, x, y)
         Y(:,i) = (y==i);
     end
     %error and loss
-    nn.e = Y - nn.a{n};
+    nn.e = nn.a{n} - Y;
     
     switch nn.output
         case 'sigm'
