@@ -4,13 +4,7 @@ function nn = nnapplygrads(nn)
 % weights and biases
     n = nn.n;
     for i = 1 : n - 1
-        if(nn.lambda >0)
-            dW = nn.dW{i} + nn.lambda * [zeros(size(nn.W{i},1),1) nn.W{i}(:,2:end)];
-        else
-            dW = nn.dW{i};
-        end
-        
-        dW = nn.learningRate * dW;
+        dW = nn.learningRate * nn.dW{i};
         
         if(nn.momentum>0)
             nn.vW{i} = nn.momentum * nn.vW{i} + dW;
