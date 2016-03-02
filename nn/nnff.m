@@ -3,7 +3,7 @@ function nn = nnff(nn, x, y)
 % nn = nnff(nn, x, y) returns an neural network structure with updated
 % layer activations, error and loss (nn.a, nn.e and nn.L)
 
-    l = nn.l;
+    n = nn.n;
     m = size(x, 1);
     
     x = [ones(m,1) x];
@@ -33,7 +33,7 @@ function nn = nnff(nn, x, y)
     end
 
     %error and loss
-    nn.e = nn.b{n} - y;
+    nn.e = y - nn.b{n};
     
     switch nn.output
         case 'sigm'

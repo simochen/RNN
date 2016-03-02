@@ -3,15 +3,15 @@ function nn = nnbp(nn)
 % nn = nnbp(nn) returns an neural network structure with updated weights 
     
     n = nn.n;
-    m = size(nn.b{1},1);
+    
     d{n} = nn.e;
     for i = (n - 1) : -1 : 2
         % Derivative of the activation function
         switch nn.activation_function 
             case 'sigm'
-                d_act = sigmGrad(nn.a{i});
+                d_act = nn.a{i} .* (1 - nn.a{i});
             case 'tanh'
-                d_act = tanhGrad(nn.a{i});
+                d_act = 1.7159 * 2/3 * (1 - 1/(1.7159)^2 * nn.a{i}.^2);
         end
         
         % Backpropagate first derivatives
@@ -25,9 +25,9 @@ function nn = nnbp(nn)
 
     for i = 1 : (n - 1)
         if i+1==n
-            nn.dW{i} = (d{i + 1}' * nn.b{i}) / m;
+            nn.dW{i} = (d{i + 1}' * nn.a{i}) / size(d{i + 1}, 1);
         else
-            nn.dW{i} = (d{i + 1}(:,2:end)' * nn.b{i}) / m;      
+            nn.dW{i} = (d{i + 1}(:,2:end)' * nn.a{i}) / size(d{i + 1}, 1);      
         end
     end
 end
